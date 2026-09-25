@@ -1,6 +1,6 @@
 import { useSesion } from "@/store/sesion";
 
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080/api/v1";
+const BASE = process.env.NEXT_PUBLIC_API_URL ?? "/api/v1";
 
 /** Error de la API en formato RFC 9457 (Problem Details), con Correlation ID para soporte. */
 export class ErrorApi extends Error {
