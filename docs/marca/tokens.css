@@ -1,0 +1,69 @@
+/*
+ * Tokens de marca — Garantías 360 (Banco Popular)
+ * Derivados del Portal Bancario y del sitio público (25/09/2026). NO OFICIAL: ver MANUAL_DE_MARCA.md.
+ * Los valores [G360] son adaptaciones de accesibilidad y de visualización de datos.
+ */
+:root {
+  /* Institucionales */
+  --bp-primary-900: #0B3642;
+  --bp-primary-700: #105163;
+  --bp-primary-600: #26737F;
+  --bp-primary-300: #87A8B1;
+  --bp-primary-100: #CFDCE0;
+
+  --bp-accent-700: #B34808; /* [G360] naranja accesible para texto (5,46:1; ≥ 5:1 también sobre los grises de fondo) */
+  --bp-accent-500: #FE680D;
+  --bp-accent-400: #F99B35;
+
+  --bp-green-700: #16700A;  /* [G360] verde accesible para texto (6,26:1; 5,22:1 sobre fondo de éxito) */
+  --bp-green-600: #21A10F;
+  --bp-green-500: #27C112;
+
+  --bp-red-700: #B01B1A;    /* [G360] rojo accesible para texto (6,96:1; 5,27:1 sobre fondo de error) */
+  --bp-red-500: #F93538;
+  --bp-blue-600: #3263A4;
+
+  /* Estados: borde/ícono, fondo, texto */
+  --bp-success: var(--bp-green-500);  --bp-success-bg: #D4F3D0; --bp-success-text: var(--bp-green-700);
+  --bp-warning: var(--bp-accent-400); --bp-warning-bg: #FEEBD7; --bp-warning-text: #8A4A00;
+  --bp-danger: var(--bp-red-500);     --bp-danger-bg: #FED7D7;  --bp-danger-text: var(--bp-red-700);
+  --bp-info: var(--bp-blue-600);      --bp-info-bg: #E8EFF8;    --bp-info-text: var(--bp-blue-600);
+  --bp-neutral-bg: #F2F2F2;           --bp-neutral-text: #555555;
+
+  /* Neutros */
+  --bp-ink-900: #121212;
+  --bp-ink-800: #2D2D2D;
+  --bp-ink-700: #434343;
+  --bp-ink-600: #555555;
+  --bp-ink-500: #7B7B7B;
+  --bp-gray-400: #9D9D9D;
+  --bp-gray-300: #C6C6C6;
+  --bp-gray-200: #E4E4E4;
+  --bp-gray-100: #F2F2F2;
+  --bp-gray-50: #F5F5F5;
+  --bp-canvas: #F6F7FB;
+  --bp-white: #FFFFFF;
+
+  /* Tipografía */
+  --bp-font-sans: "Inter", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+
+  /* Radios y elevación */
+  --bp-radius-sm: 4px;
+  --bp-radius-md: 8px;
+  --bp-radius-toast: 10px;
+  --bp-radius-lg: 12px;
+  --bp-radius-pill: 200px;
+  --bp-shadow-card: 0 2px 4px 0 rgba(35, 46, 36, 0.12);
+  --bp-shadow-float: 0 6px 12px rgba(0, 0, 0, 0.15);
+  --bp-shadow-modal: 0 16px 24px 0 rgba(0, 0, 0, 0.14);
+  --bp-focus-ring: 0 0 0 3px rgba(16, 81, 99, 0.15);
+  --bp-overlay: rgba(22, 23, 24, 0.35);
+
+  /* Visualización de datos (validada: 6 verificaciones en claro y oscuro) */
+  --bp-chart-1: #00879B;
+  --bp-chart-2: #E8620C;
+  --bp-chart-3: #4E7FD0;
+  --bp-chart-4: #3AA64A;
+  --bp-chart-5: #B86BC9;
+  --bp-chart-6: #8C6A00;
+}
