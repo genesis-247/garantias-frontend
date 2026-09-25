@@ -1,69 +1,145 @@
 /*
  * Tokens de marca — Garantías 360 (Banco Popular)
- * Derivados del Portal Bancario y del sitio público (25/09/2026). NO OFICIAL: ver MANUAL_DE_MARCA.md.
- * Los valores [G360] son adaptaciones de accesibilidad y de visualización de datos.
+ * Base: sistema de diseño "Designio" del Banco (--bpop-designio-*), tal como lo usa el Portal Bancario v5.1.3.
+ * NO OFICIAL: reconstruido de los sitios públicos (25/09/2026). Ver MANUAL_DE_MARCA.md.
+ * Los tokens --g360-* son adaptaciones propias (accesibilidad AA, visualización de datos, layout).
  */
 :root {
-  /* Institucionales */
-  --bp-primary-900: #0B3642;
-  --bp-primary-700: #105163;
-  --bp-primary-600: #26737F;
-  --bp-primary-300: #87A8B1;
-  --bp-primary-100: #CFDCE0;
+  /* ---- Designio: color ---- */
+  --bpop-designio-color-primary-100: #CFDCE0;
+  --bpop-designio-color-primary-400: #87A8B1;
+  --bpop-designio-color-primary-600: #105163;
+  --bpop-designio-color-primary-800: #1E3855;
+  --bpop-designio-color-primary-900: #0B3642;
+  --bpop-designio-color-primary-48: rgb(16 81 99 / 0.48);
+  --bpop-designio-color-primary-64: rgb(16 81 99 / 0.64);
+  --bpop-designio-color-primary-72: rgb(16 81 99 / 0.72);
+  --bpop-designio-color-primary-88: rgb(16 81 99 / 0.88);
 
-  --bp-accent-700: #B34808; /* [G360] naranja accesible para texto (5,46:1; ≥ 5:1 también sobre los grises de fondo) */
-  --bp-accent-500: #FE680D;
-  --bp-accent-400: #F99B35;
+  --bpop-designio-color-brand-100: #D4F3D0;
+  --bpop-designio-color-brand-400: #3AEF00;
+  --bpop-designio-color-brand-600: #27C112;
+  --bpop-designio-color-brand-900: #21A10F;
 
-  --bp-green-700: #16700A;  /* [G360] verde accesible para texto (6,26:1; 5,22:1 sobre fondo de éxito) */
-  --bp-green-600: #21A10F;
-  --bp-green-500: #27C112;
+  --bpop-designio-color-secondary-100: #FEEBD7;
+  --bpop-designio-color-secondary-400: #F99B35;
+  --bpop-designio-color-secondary-600: #F99B35;
+  --bpop-designio-color-secondary-900: #FE680D;
 
-  --bp-red-700: #B01B1A;    /* [G360] rojo accesible para texto (6,96:1; 5,27:1 sobre fondo de error) */
-  --bp-red-500: #F93538;
-  --bp-blue-600: #3263A4;
+  --bpop-designio-color-terciary-100: #0CDDD9;
+  --bpop-designio-color-terciary-400: #5DE8E6;
+  --bpop-designio-color-terciary-600: #0CDDD9;
+  --bpop-designio-color-terciary-900: #006863;
 
-  /* Estados: borde/ícono, fondo, texto */
-  --bp-success: var(--bp-green-500);  --bp-success-bg: #D4F3D0; --bp-success-text: var(--bp-green-700);
-  --bp-warning: var(--bp-accent-400); --bp-warning-bg: #FEEBD7; --bp-warning-text: #8A4A00;
-  --bp-danger: var(--bp-red-500);     --bp-danger-bg: #FED7D7;  --bp-danger-text: var(--bp-red-700);
-  --bp-info: var(--bp-blue-600);      --bp-info-bg: #E8EFF8;    --bp-info-text: var(--bp-blue-600);
-  --bp-neutral-bg: #F2F2F2;           --bp-neutral-text: #555555;
+  --bpop-designio-color-success-100: #D4ECD0;
+  --bpop-designio-color-success-400: #93CF88;
+  --bpop-designio-color-success-600: #279F12;
+  --bpop-designio-color-success-900: #1A6A0C;
 
-  /* Neutros */
-  --bp-ink-900: #121212;
-  --bp-ink-800: #2D2D2D;
-  --bp-ink-700: #434343;
-  --bp-ink-600: #555555;
-  --bp-ink-500: #7B7B7B;
-  --bp-gray-400: #9D9D9D;
-  --bp-gray-300: #C6C6C6;
-  --bp-gray-200: #E4E4E4;
-  --bp-gray-100: #F2F2F2;
-  --bp-gray-50: #F5F5F5;
-  --bp-canvas: #F6F7FB;
-  --bp-white: #FFFFFF;
+  --bpop-designio-color-warning-100: #FEEBD7;
+  --bpop-designio-color-warning-400: #FCCD9A;
+  --bpop-designio-color-warning-600: #F99B35;
+  --bpop-designio-color-warning-900: #CF812C;
 
-  /* Tipografía */
-  --bp-font-sans: "Inter", "Helvetica Neue", ui-sans-serif, system-ui, sans-serif;
+  --bpop-designio-color-error-100: #FED7D7;
+  --bpop-designio-color-error-400: #FB787A;
+  --bpop-designio-color-error-600: #F93538;
+  --bpop-designio-color-error-900: #A62325;
 
-  /* Radios y elevación */
-  --bp-radius-sm: 4px;
-  --bp-radius-md: 8px;
-  --bp-radius-toast: 10px;
-  --bp-radius-lg: 12px;
-  --bp-radius-pill: 200px;
-  --bp-shadow-card: 0 2px 4px 0 rgba(35, 46, 36, 0.12);
-  --bp-shadow-float: 0 6px 12px rgba(0, 0, 0, 0.15);
-  --bp-shadow-modal: 0 16px 24px 0 rgba(0, 0, 0, 0.14);
-  --bp-focus-ring: 0 0 0 3px rgba(16, 81, 99, 0.15);
-  --bp-overlay: rgba(22, 23, 24, 0.35);
+  --bpop-designio-color-info-100: #DBEAFD;
+  --bpop-designio-color-info-400: #A5CAFA;
+  --bpop-designio-color-info-600: #4B95F6;
+  --bpop-designio-color-info-800: #3C54A1;
+  --bpop-designio-color-info-900: #3263A4;
 
-  /* Visualización de datos (validada: 6 verificaciones en claro y oscuro) */
-  --bp-chart-1: #00879B;
-  --bp-chart-2: #E8620C;
-  --bp-chart-3: #4E7FD0;
-  --bp-chart-4: #3AA64A;
-  --bp-chart-5: #B86BC9;
-  --bp-chart-6: #8C6A00;
+  --bpop-designio-color-dark-100: #252525;
+  --bpop-designio-color-dark-400: #1F1F1F;
+  --bpop-designio-color-dark-600: #121212;
+  --bpop-designio-color-dark-900: #000000;
+  --bpop-designio-color-mid-100: #9D9D9D;
+  --bpop-designio-color-mid-400: #7B7B7B;
+  --bpop-designio-color-mid-600: #555555;
+  --bpop-designio-color-mid-900: #434343;
+  --bpop-designio-color-light-100: #FFFFFF;
+  --bpop-designio-color-light-400: #F5F5F5;
+  --bpop-designio-color-light-500: #C4C4C4;
+  --bpop-designio-color-light-600: #E4E4E4;
+  --bpop-designio-color-light-900: #C6C6C6;
+  --bpop-designio-color-carbon-48: rgb(18 18 18 / 0.48);
+  --bpop-designio-color-carbon-64: rgb(18 18 18 / 0.64);
+  --bpop-designio-color-carbon-72: rgb(18 18 18 / 0.72);
+  --bpop-designio-color-carbon-88: rgb(18 18 18 / 0.88);
+
+  --bpop-designio-primary-grad: linear-gradient(180deg, #26737F 0%, #105163 100%);
+  --bpop-designio-accent-grad: linear-gradient(180deg, #27C112 0%, #279F12 100%);
+  --bpop-designio-carbon-dark-grad: linear-gradient(180deg, #434343 0%, #121212 100%);
+  --bpop-designio-carbon-mid-grad: linear-gradient(180deg, #C4C4C4 0%, #7B7B7B 100%);
+
+  /* ---- Designio: tipografía ---- */
+  --bpop-designio-font-family: "Inter", sans-serif;
+  --bpop-designio-font-weigh-regular: 400;
+  --bpop-designio-font-weigh-medium: 500;
+  --bpop-designio-font-weigh-semibold: 600;
+  --bpop-designio-font-weigh-bold: 700;
+  --bpop-designio-font-size-h3: 2rem;        --bpop-designio-line-height-h3: 2.5rem;
+  --bpop-designio-font-size-h4: 1.75rem;     --bpop-designio-line-height-h4: 2.25rem;
+  --bpop-designio-font-size-h5: 1.3125rem;   --bpop-designio-line-height-h5: 1.75rem;
+  --bpop-designio-font-size-s1: 1.125rem;    --bpop-designio-line-height-s1: 1.5rem;
+  --bpop-designio-font-size-s2: 1rem;        --bpop-designio-line-height-s2: 1.25rem;
+  --bpop-designio-font-size-a1: 0.9375rem;   --bpop-designio-line-height-a1: 1.3125rem;
+  --bpop-designio-font-size-a2: 0.875rem;    --bpop-designio-line-height-a2: 1.25rem;
+  --bpop-designio-font-size-a3: 0.75rem;     --bpop-designio-line-height-a3: 1.0625rem;
+  --bpop-designio-font-size-b1: 0.875rem;    --bpop-designio-line-height-b1: 1.5rem;
+  --bpop-designio-font-size-b2: 0.8125rem;   --bpop-designio-line-height-b2: 1.375rem;
+  --bpop-designio-font-size-b3: 0.75rem;     --bpop-designio-line-height-b3: 1.25rem;
+  --bpop-designio-font-size-c: 0.6875rem;    --bpop-designio-line-height-c: 1rem;
+  --bpop-designio-font-size-o: 0.625rem;     --bpop-designio-line-height-o: 0.875rem;
+
+  /* ---- Designio: radios, bordes, espaciado ---- */
+  --bpop-designio-radius-2: 0.125rem;
+  --bpop-designio-radius-4: 0.25rem;
+  --bpop-designio-radius-8: 0.5rem;
+  --bpop-designio-radius-12: 0.75rem;
+  --bpop-designio-radius-16: 1rem;
+  --bpop-designio-radius-32: 2rem;
+  --bpop-designio-radius-full: 624.9375rem;
+  --bpop-designio-border-1: 0.0625rem;
+  --bpop-spacing-xxxxs: 0.125rem;
+  --bpop-spacing-xxxs: 0.25rem;
+  --bpop-spacing-xxs: 0.375rem;
+  --bpop-spacing-xs: 0.5rem;
+  --bpop-spacing-2xs: 0.625rem;
+  --bpop-spacing-s: 0.75rem;
+  --bpop-spacing-sm: 1rem;
+  --bpop-spacing-2sm: 1.25rem;
+  --bpop-spacing-md: 1.5rem;
+  --bpop-spacing-lg: 2rem;
+  --bpop-spacing-xl: 2.5rem;
+  --bpop-spacing-2xl: 3rem;
+  --bpop-spacing-3xl: 3.5rem;
+  --bpop-spacing-4xl: 4rem;
+
+  /* ---- Marca (logotipo) ---- */
+  --bpop-logo-green: #00B800; /* solo logotipo e íconos de marca: 2,67:1, nunca texto */
+  --bpop-logo-gray: #969696;
+
+  /* ---- G360: extensiones ---- */
+  --g360-canvas: #F6F7FB;
+  --g360-link: #B34808;          /* naranja accesible para texto (5,46:1) */
+  --g360-warning-text: #8A4A00;  /* 5,91:1 sobre warning-100 */
+  --g360-danger-hover: #861C1E;
+  --g360-shadow-card: 0 2px 4px 0 rgba(35, 46, 36, 0.12);
+  --g360-shadow-float: 0 6px 12px rgba(0, 0, 0, 0.15);
+  --g360-shadow-modal: 0 16px 24px 0 rgba(0, 0, 0, 0.14);
+  --g360-focus-ring: 0 0 0 3px rgba(16, 81, 99, 0.15);
+  --g360-control-height: 48px;
+  --g360-control-height-compact: 40px;
+
+  /* Visualización de datos: orden fijo, validado (6 verificaciones, claro y oscuro). Sin verde: reservado a estados. */
+  --g360-chart-1: #00879B;
+  --g360-chart-2: #E8620C;
+  --g360-chart-3: #5B6FD6;
+  --g360-chart-4: #8C6A00;
+  --g360-chart-5: #C2417A;
+  --g360-chart-6: #6E8B00;
 }
