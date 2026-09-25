@@ -7,7 +7,7 @@
 | Fecha | 2026-09-25 |
 | Fuentes | Páginas guardadas el 25/09/2026, con sus recursos (HTML, CSS y SVG): **Portal Bancario** (`mi.bancopopular.com.co/login`, v5.1.3) y página de producto **Cuenta Plateada** (`www.bancopopular.com.co`). |
 | Hallazgo principal | El Portal está construido sobre el **sistema de diseño corporativo del Banco, "Designio"** (variables `--bpop-designio-*`). Este manual adopta sus tokens tal cual. |
-| Archivos | [`tokens.css`](tokens.css) · [`tailwind-preset.ts`](tailwind-preset.ts) · activos en [`/public/marca`](../../public/marca) · [vista de activos](vista-activos.png) |
+| Archivos | [`styles/tokens.css`](../../styles/tokens.css) · [`styles/banco-popular.preset.ts`](../../styles/banco-popular.preset.ts) · activos en [`/public/marca`](../../public/marca) · [vista de activos](vista-activos.png) |
 
 > ⚠️ **Alcance y validez.**
 > - Este manual se reconstruyó del código de los sitios públicos del Banco y no reemplaza el manual de identidad oficial ni la documentación oficial de Designio (P-19).

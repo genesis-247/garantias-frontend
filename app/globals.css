@@ -1,0 +1,25 @@
+@import "../styles/tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: var(--bpop-designio-font-family);
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-canvas text-dark-600;
+    font-size: var(--bpop-designio-font-size-b1);
+  }
+  /* Foco visible del Portal Bancario (manual §6.1). */
+  :focus-visible {
+    outline: 2px solid var(--bpop-designio-color-primary-600);
+    outline-offset: 2px;
+    box-shadow: var(--g360-focus-ring);
+  }
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}

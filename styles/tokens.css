@@ -76,7 +76,7 @@
   --bpop-designio-carbon-mid-grad: linear-gradient(180deg, #C4C4C4 0%, #7B7B7B 100%);
 
   /* ---- Designio: tipografía ---- */
-  --bpop-designio-font-family: "Inter", sans-serif;
+  --bpop-designio-font-family: "Inter Variable", "Inter", sans-serif;
   --bpop-designio-font-weigh-regular: 400;
   --bpop-designio-font-weigh-medium: 500;
   --bpop-designio-font-weigh-semibold: 600;
