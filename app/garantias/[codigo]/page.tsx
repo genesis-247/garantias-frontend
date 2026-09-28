@@ -6,9 +6,10 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowRightLeft, Calculator, Check, FileCheck2, Hash, Scale, TrendingUp } from "lucide-react";
 import { api, enviar } from "@/lib/api";
-import { cop, fecha, fechaHora, humano, porcentaje, cn } from "@/lib/formato";
+import { cop, fecha, fechaHora, humano, porcentaje, cn, hoyLocal } from "@/lib/formato";
 import type { Alerta, CoberturaVigente, GarantiaResumen, Macroestado, RegistroAuditoria } from "@/lib/tipos";
-import type { TipoGarantia } from "@/lib/consultas";
+import type { ItemChecklist, PlanConstitucion, TipoGarantia } from "@/lib/consultas";
+import { PlanConstitucionVista } from "@/components/plan-constitucion";
 import { tieneRol, useSesion } from "@/store/sesion";
 import { EncabezadoPagina } from "@/components/pagina";
 import { CuerpoTarjeta, Tarjeta } from "@/components/ui/tarjeta";
@@ -25,6 +26,8 @@ interface Expediente {
   tipoVersion: number;
   campos: TipoGarantia["campos"];
   siguientesEstados: Macroestado[];
+  checklistJuridico: ItemChecklist[];
+  constitucion: PlanConstitucion;
   participantes: { id: string; rol: string; tipoDocumento: string; numeroDocumento: string; nombre: string; porcentaje: number | null }[];
   obligaciones: {
     vinculo: { tipo: string; tope: number | null; valorPactado: number | null; prioridad: number };
@@ -75,7 +78,13 @@ export default function Expediente360() {
               <Boton variante="secundario" onClick={() => setAccion("juridico")}><Scale className="h-4 w-4" /> Estudio jurídico</Boton>
             )}
             {tieneRol(perfil, "OPERACIONES_GESTOR", "OPERACIONES_DIRECTOR") && ["CONSTITUCION", "PERFECCIONAMIENTO"].includes(g.macroestado) && !g.perfeccionada && (
-              <Boton variante="secundario" onClick={() => setAccion("perfeccionamiento")}><FileCheck2 className="h-4 w-4" /> Perfeccionar</Boton>
+              e.constitucion.actividades.length === 0 || e.constitucion.resumen.completo ? (
+                <Boton variante="secundario" onClick={() => setAccion("perfeccionamiento")}><FileCheck2 className="h-4 w-4" /> Perfeccionar</Boton>
+              ) : (
+                <Boton variante="secundario" onClick={() => setPestana("juridico")} title="Completa las actividades obligatorias del plan para perfeccionar">
+                  <FileCheck2 className="h-4 w-4" /> Plan de constitución ({e.constitucion.resumen.obligatoriasPendientes} pendientes)
+                </Boton>
+              )
             )}
             {tieneRol(perfil, "OPERACIONES_GESTOR", "OPERACIONES_DIRECTOR", "JURIDICA_DIRECTOR") && e.tipo.clase !== "FONDO_GARANTIAS" && (
               <Boton variante="secundario" onClick={() => setAccion("valoracion")}><TrendingUp className="h-4 w-4" /> Registrar valoración</Boton>
@@ -132,7 +141,7 @@ export default function Expediente360() {
               { id: "resumen", etiqueta: "Resumen" },
               { id: "obligaciones", etiqueta: "Obligaciones y cobertura", conteo: e.obligaciones.length },
               { id: "valoraciones", etiqueta: "Valoraciones", conteo: e.valoraciones.length },
-              { id: "juridico", etiqueta: "Jurídico y registro" },
+              { id: "juridico", etiqueta: "Jurídico y constitución", conteo: e.constitucion.actividades.length || undefined },
               { id: "alertas", etiqueta: "Alertas", conteo: e.alertas.length },
               { id: "eventos", etiqueta: "Eventos y cálculos", conteo: e.eventos.length },
               { id: "auditoria", etiqueta: "Auditoría", conteo: e.auditoria.length },
@@ -255,6 +264,7 @@ export default function Expediente360() {
           )}
 
           {pestana === "juridico" && (
+            <div className="space-y-8">
             <dl className="grid grid-cols-2 gap-5 md:grid-cols-4">
               <Dato etiqueta="Estado jurídico">{humano(g.estadoJuridico)}</Dato>
               <Dato etiqueta="Condicionamientos abiertos">{g.condicionamientosAbiertos}</Dato>
@@ -264,10 +274,26 @@ export default function Expediente360() {
               <Dato etiqueta="Registro público">{e.tipo.registroPublico === "NINGUNO" ? "No aplica" : e.tipo.registroPublico}</Dato>
               <Dato etiqueta="Requiere póliza">{e.tipo.requierePoliza ? "Sí" : "No"}</Dato>
               <Dato etiqueta="Requiere avalúo">{e.tipo.requiereAvaluo ? "Sí" : "No"}</Dato>
-              <p className="col-span-full rounded-dg-8 bg-info-100 p-3 text-b3 text-info-900">
-                El checklist jurídico, los hallazgos y la plantilla de actividades de constitución configurables por tipo llegan en el incremento 2 (M05 y M06 completos, integrados con Appian y OnBase).
-              </p>
             </dl>
+            <section>
+              <h3 className="mb-2 text-s2 font-semibold">Checklist jurídico del tipo</h3>
+              {e.checklistJuridico.length === 0 ? <p className="text-b3 text-mid-600">La versión del tipo no define checklist jurídico.</p> : (
+                <ul className="grid gap-2 md:grid-cols-2">
+                  {e.checklistJuridico.map((i) => (
+                    <li key={i.codigo} className="flex items-start gap-2 rounded-dg-8 border border-light-600 p-3 text-b2">
+                      <Scale className="mt-0.5 h-4 w-4 shrink-0 text-primary-600" aria-hidden />
+                      <span>{i.descripcion}{!i.obligatorio && <span className="text-mid-600"> (opcional)</span>}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <p className="mt-2 text-c text-mid-600">El estudio se ejecuta en Appian; Garantías 360 guarda el concepto y valida la transición (RF-0502).</p>
+            </section>
+            <section>
+              <h3 className="mb-2 text-s2 font-semibold">Plan de constitución y perfeccionamiento</h3>
+              <PlanConstitucionVista codigo={g.codigo} campos={e.campos} atributos={g.atributos ?? {}} />
+            </section>
+            </div>
           )}
 
           {pestana === "alertas" && (
@@ -366,7 +392,7 @@ function PanelTransicion({ abierto, e, onCerrar, onListo }: { abierto: boolean; 
 }
 
 function PanelValoracion({ abierto, codigo, valorActual, onCerrar, onListo }: { abierto: boolean; codigo: string; valorActual: number | null; onCerrar: () => void; onListo: () => void }) {
-  const hoy = new Date().toISOString().slice(0, 10);
+  const hoy = hoyLocal();
   const [f, setF] = useState({ tipo: "AVALUO_COMERCIAL", fecha: hoy, valorComercial: "", valorTecnico: "", perito: "", raa: "", metodologia: "", motivo: "" });
   const m = useMutation({
     mutationFn: () => enviar(`/garantias/${codigo}/valoraciones`, "POST", {
@@ -430,7 +456,7 @@ function PanelJuridico({ abierto, codigo, onCerrar, onListo }: { abierto: boolea
 }
 
 function PanelPerfeccionamiento({ abierto, e, onCerrar, onListo }: { abierto: boolean; e: Expediente; onCerrar: () => void; onListo: () => void }) {
-  const hoy = new Date().toISOString().slice(0, 10);
+  const hoy = hoyLocal();
   const pendientes = e.campos.filter((c) => c.obligatorioDesde && ["CONSTITUCION", "PERFECCIONAMIENTO"].includes(c.obligatorioDesde) && !e.garantia.atributos?.[c.codigo]);
   const [valores, setValores] = useState<Record<string, string>>({});
   const [fechas, setFechas] = useState({ fechaConstitucion: hoy, fechaPerfeccionamiento: hoy });

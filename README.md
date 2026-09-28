@@ -2,7 +2,7 @@
 
 Interfaz web de Garantías 360 (Banco Popular): centro de mando, registro maestro y Expediente 360, cobertura explicable, motor de reglas con maker–checker, monitoreo, core transaccional y auditoría.
 
-**Stack:** Next.js 15 (App Router) · React 18 · TypeScript · Tailwind CSS 3.4 con los tokens **Designio** del Banco (`styles/`) · TanStack Query · Recharts. Son las mismas versiones que la plataforma Proceder.
+**Stack:** Next.js 15 (App Router) · React 18 · TypeScript · Tailwind CSS 3.4 con los tokens **Designio** del Banco (`styles/`) · TanStack Query · Recharts.
 
 ## Ejecutar en local
 
@@ -14,7 +14,7 @@ npm run dev                       # http://localhost:3000
 
 Requiere el backend (`garantias-backend`) corriendo con el perfil `demo`.
 
-- **Identidad en local y demo:** el selector de perfil del encabezado envía `X-Usuario` y `X-Roles`. Así se puede demostrar el maker–checker: por ejemplo, Ana (Riesgos) crea una regla y Juan (Aprobador) la aprueba.
+- **Identidad en local y demo:** el selector del encabezado lista los usuarios activos de la administración de usuarios y perfiles, con sus roles efectivos, y envía `X-Usuario`. Así se puede demostrar el maker–checker: Ana (Riesgos) crea una regla y Juan (Aprobador) la aprueba; Diego edita un tipo y Natalia lo publica; Pedro carga un archivo y Marcela lo aprueba.
 - **Identidad en producción:** se reemplaza por el inicio de sesión con Entra ID (MSAL) y el token de acceso, y el selector no se muestra (`NEXT_PUBLIC_AUTH_MODO=entra`, pendiente de integrar).
 
 ## Scripts

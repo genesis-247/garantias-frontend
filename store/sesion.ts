@@ -4,8 +4,10 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 /**
- * Perfiles de demostración (solo modo "cabeceras", perfiles local/demo del backend). En producción la
- * identidad y los roles vienen del token de Entra ID y este selector no se muestra.
+ * Identidad de demostración (solo modo "cabeceras", perfiles local/demo del backend). La lista de
+ * usuarios y sus roles efectivos vienen de la administración de usuarios y perfiles (M24); esta
+ * lista local solo se usa si el backend aún no responde. En producción la identidad y los roles
+ * vienen del token de Entra ID y el selector no se muestra.
  */
 export interface Perfil {
   usuario: string;
@@ -23,19 +25,21 @@ export const PERFILES: Perfil[] = [
   { usuario: "aprobador.juan", nombre: "Juan Camilo Rey", cargo: "Aprobador de reglas", roles: ["APROBADOR_REGLAS"] },
   { usuario: "auditoria.sofia", nombre: "Sofía Herrera", cargo: "Auditora interna", roles: ["AUDITOR"] },
   { usuario: "admin.funcional", nombre: "Diego Parra", cargo: "Administrador funcional", roles: ["ADMIN_FUNCIONAL", "SISTEMA"] },
+  { usuario: "admin.aprobadora", nombre: "Natalia Guzmán", cargo: "Administradora funcional (aprobadora)", roles: ["ADMIN_FUNCIONAL"] },
+  { usuario: "seguridad.andres", nombre: "Andrés Castaño", cargo: "Administrador de seguridad", roles: ["ADMIN_SEGURIDAD"] },
   { usuario: "consulta.comercial", nombre: "Valentina Ortiz", cargo: "Gerente comercial", roles: ["CONSULTOR"] },
 ];
 
 interface EstadoSesion {
   perfil: Perfil;
-  cambiar: (usuario: string) => void;
+  cambiar: (perfil: Perfil) => void;
 }
 
 export const useSesion = create<EstadoSesion>()(
   persist(
     (set) => ({
       perfil: PERFILES[0],
-      cambiar: (usuario) => set({ perfil: PERFILES.find((p) => p.usuario === usuario) ?? PERFILES[0] }),
+      cambiar: (perfil) => set({ perfil }),
     }),
     { name: "g360-sesion" },
   ),

@@ -28,6 +28,9 @@ export const fechaHora = (f: string | null | undefined) =>
     ? new Date(f).toLocaleString("es-CO", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })
     : "—";
 
+/** Fecha de hoy (AAAA-MM-DD) en America/Bogota, no en UTC. */
+export const hoyLocal = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Bogota" });
+
 export const mes = (f: string) => new Date(`${f}T12:00:00`).toLocaleDateString("es-CO", { month: "short", year: "2-digit" });
 
 /** Etiquetas en español para los códigos del dominio (los códigos no llevan tildes). */
@@ -52,6 +55,25 @@ const ETIQUETAS: Record<string, string> = {
   EVENTO_PUBLICADO: "Evento publicado", EVENTO_RECIBIDO: "Evento recibido", CALCULO_COBERTURA: "Cálculo de cobertura", AUDITORIA: "Auditoría",
   NUMERO: "Número", FRACCION: "Fracción", DECIMAL_NO_NEGATIVO: "Decimal no negativo", METODO: "Método", BOOLEANO: "Booleano",
   CARGA_INICIAL_DEMO: "Carga inicial (demo)", CAMBIO_GARANTIA: "Cambio en la garantía", RECALCULO_MANUAL: "Recálculo manual",
+  // Incremento 2: tipos, constitución, carga masiva y seguridad.
+  NUEVA_VERSION_TIPO: "Nueva versión del tipo", EDITAR_TIPO_GARANTIA: "Edición del tipo", ENVIAR_TIPO_GARANTIA: "Envío a aprobación",
+  PUBLICAR_TIPO_GARANTIA: "Publicación (aprobada)", RECHAZAR_TIPO_GARANTIA: "Rechazo", DESCARTAR_VERSION_TIPO: "Borrador descartado",
+  INACTIVAR_TIPO_GARANTIA: "Inactivación del tipo", REACTIVAR_TIPO_GARANTIA: "Reactivación del tipo",
+  GENERAR_PLAN_CONSTITUCION: "Plan de constitución generado", ACTIVIDAD_CONSTITUCION: "Avance de constitución",
+  ACTUALIZAR_GARANTIA: "Actualización de datos", CREAR_CARGA_MASIVA: "Carga masiva validada", ENVIAR_CARGA_MASIVA: "Carga enviada a aprobación",
+  APROBAR_CARGA_MASIVA: "Carga aprobada", RECHAZAR_CARGA_MASIVA: "Carga rechazada", CANCELAR_CARGA_MASIVA: "Carga cancelada",
+  PROCESAR_CARGA_MASIVA: "Carga procesada", CREAR_USUARIO: "Alta de usuario", EDITAR_USUARIO: "Cambio de usuario",
+  INACTIVAR_USUARIO: "Inactivación de usuario", ACTIVAR_USUARIO: "Activación de usuario", CREAR_PERFIL: "Alta de perfil", EDITAR_PERFIL: "Cambio de perfil",
+  BORRADOR: "Borrador", PUBLICADA: "Publicada", REEMPLAZADA: "Reemplazada", RECHAZADA: "Rechazada", EN_CURSO: "En curso",
+  COMPLETADA: "Completada", BLOQUEADA: "Bloqueada", NO_APLICA: "No aplica", PENDIENTE: "Pendiente", VALIDADA: "Validada",
+  CON_ERRORES: "Con errores", EN_APROBACION: "En aprobación", EN_PROCESO: "En proceso", PROCESADA: "Procesada",
+  PROCESADA_CON_FALLOS: "Procesada con fallos", CANCELADA: "Cancelada", VALIDA: "Válida", OMITIDA: "Omitida", FALLIDA: "Fallida",
+  CARGA_MASIVA: "Carga masiva", MANUAL: "Captura manual", TEXTO_LARGO: "Texto largo", MONEDA: "Moneda", FECHA: "Fecha",
+  LISTA: "Lista", LISTA_MULTIPLE: "Selección múltiple", TEXTO: "Texto", OPERACIONES_GESTOR: "Gestor de operaciones",
+  OPERACIONES_DIRECTOR: "Director de operaciones", JURIDICA_GESTOR: "Gestor jurídico", JURIDICA_DIRECTOR: "Director jurídico",
+  RIESGOS_GESTOR: "Gestor de riesgos", APROBADOR_REGLAS: "Aprobador de reglas", ADMIN_FUNCIONAL: "Administrador funcional",
+  ADMIN_SEGURIDAD: "Administrador de seguridad", CAMARA_COMERCIO: "Cámara de Comercio", ORIP: "ORIP", RGM: "RGM", RUNT: "RUNT",
+  FNA: "FNA", FNG: "FNG", FAG: "FAG",
 };
 
 export const humano = (codigo: string | null | undefined): string => {

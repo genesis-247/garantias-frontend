@@ -7,10 +7,11 @@ import { useEffect, useState, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Activity, BarChart3, Bell, Bot, BookCheck, ChevronDown, ClipboardCheck, Database, FileSearch, Gavel, Landmark,
-  LayoutDashboard, Menu, PanelLeftClose, Scale, Search, ShieldCheck, Sliders, Unlock, Workflow, Settings2,
+  LayoutDashboard, Menu, PanelLeftClose, Scale, Search, ShieldCheck, Sliders, Unlock, Workflow, Settings2, FileSpreadsheet,
+  UsersRound,
 } from "lucide-react";
 import { cn } from "@/lib/formato";
-import { PERFILES, useSesion } from "@/store/sesion";
+import { PERFILES, useSesion, type Perfil } from "@/store/sesion";
 import { api } from "@/lib/api";
 import type { Alerta } from "@/lib/tipos";
 
@@ -47,7 +48,14 @@ const MENU: { grupo: string; items: Item[] }[] = [
       { href: "/auditoria", etiqueta: "Auditoría", icono: FileSearch },
     ],
   },
-  { grupo: "Administración", items: [{ href: "/configuracion", etiqueta: "Tipos de garantía", icono: Settings2 }] },
+  {
+    grupo: "Administración",
+    items: [
+      { href: "/configuracion", etiqueta: "Tipos de garantía", icono: Settings2 },
+      { href: "/carga-masiva", etiqueta: "Carga masiva", icono: FileSpreadsheet },
+      { href: "/seguridad", etiqueta: "Usuarios y perfiles", icono: UsersRound },
+    ],
+  },
 ];
 
 const TODOS = MENU.flatMap((g) => g.items.map((i) => ({ ...i, grupo: g.grupo })));
@@ -146,6 +154,19 @@ function Encabezado({ onMenu }: { onMenu: () => void }) {
   const [menuPerfil, setMenuPerfil] = useState(false);
   useEffect(() => setMontado(true), []);
 
+  // Usuarios de demostración con sus roles efectivos (administración de perfiles, M24).
+  const { data: usuarios } = useQuery({
+    queryKey: ["usuarios-demo"],
+    queryFn: () => api<Perfil[]>("/sesion/usuarios-demo"),
+    enabled: montado,
+    staleTime: 60_000,
+  });
+  const disponibles = usuarios && usuarios.length > 0 ? usuarios : PERFILES;
+  useEffect(() => {
+    const actualizado = usuarios?.find((u) => u.usuario === perfil.usuario);
+    if (actualizado && (actualizado.roles.join() !== perfil.roles.join() || actualizado.nombre !== perfil.nombre)) cambiar(actualizado);
+  }, [usuarios, perfil, cambiar]);
+
   const { data: alertas } = useQuery({
     queryKey: ["alertas", "encabezado", perfil.usuario],
     queryFn: () => api<Alerta[]>("/alertas"),
@@ -219,17 +240,17 @@ function Encabezado({ onMenu }: { onMenu: () => void }) {
           <ChevronDown className="h-4 w-4 text-mid-600" aria-hidden />
         </button>
         {menuPerfil && (
-          <div className="absolute right-0 top-12 z-30 w-80 rounded-dg-12 border border-light-600 bg-white p-2 shadow-float" role="listbox">
+          <div className="absolute right-0 top-12 z-30 max-h-[70vh] w-80 overflow-y-auto rounded-dg-12 border border-light-600 bg-white p-2 shadow-float" role="listbox">
             <p className="px-3 py-2 text-c text-mid-600">
-              Perfil de demostración (perfiles local/demo). En producción la identidad y los roles vienen de Entra ID.
+              Usuario de demostración (perfiles local/demo). Los roles salen de la administración de usuarios y perfiles; en producción la identidad viene de Entra ID.
             </p>
-            {PERFILES.map((p) => (
+            {disponibles.map((p) => (
               <button
                 key={p.usuario}
                 role="option"
                 aria-selected={p.usuario === perfil.usuario}
                 onClick={() => {
-                  cambiar(p.usuario);
+                  cambiar(p);
                   setMenuPerfil(false);
                 }}
                 className={cn("flex w-full flex-col rounded-dg-8 px-3 py-2 text-left hover:bg-light-400", p.usuario === perfil.usuario && "bg-primary-100")}

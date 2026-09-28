@@ -3,7 +3,9 @@
 import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { ChevronLeft, ChevronRight, Download } from "lucide-react";
+import Link from "next/link";
+import { ChevronLeft, ChevronRight, Download, FileSpreadsheet, Plus } from "lucide-react";
+import { tieneRol, useSesion } from "@/store/sesion";
 import { api } from "@/lib/api";
 import { entero, humano } from "@/lib/formato";
 import type { GarantiaResumen, Pagina } from "@/lib/tipos";
@@ -29,6 +31,7 @@ function exportarCsv(items: GarantiaResumen[]) {
 
 function Listado() {
   const params = useSearchParams();
+  const { perfil } = useSesion();
   const [filtros, setFiltros] = useState({
     texto: params.get("texto") ?? "",
     tipo: params.get("tipo") ?? "",
@@ -57,9 +60,21 @@ function Listado() {
         titulo="Garantías"
         descripcion="Registro maestro: cada garantía con su estado, idoneidad, valores y cobertura vigente."
         acciones={
-          <Boton variante="secundario" onClick={() => data && exportarCsv(data.items)} disabled={!data?.items.length}>
-            <Download className="h-4 w-4" aria-hidden /> Exportar página
-          </Boton>
+          <>
+            <Boton variante="secundario" onClick={() => data && exportarCsv(data.items)} disabled={!data?.items.length}>
+              <Download className="h-4 w-4" aria-hidden /> Exportar página
+            </Boton>
+            {tieneRol(perfil, "OPERACIONES_GESTOR", "OPERACIONES_DIRECTOR") && (
+              <>
+                <Link href="/carga-masiva" className="inline-flex h-control-compact items-center gap-2 rounded-dg-8 border border-primary-600 bg-white px-4 text-a2 font-bold text-primary-600 hover:bg-primary-100">
+                  <FileSpreadsheet className="h-4 w-4" aria-hidden /> Carga masiva
+                </Link>
+                <Link href="/garantias/nueva" className="inline-flex h-control-compact items-center gap-2 rounded-dg-8 bg-primary-600 px-4 text-a2 font-bold text-white hover:bg-primary-grad">
+                  <Plus className="h-4 w-4" aria-hidden /> Registrar garantía
+                </Link>
+              </>
+            )}
+          </>
         }
       />
       <Tarjeta>
